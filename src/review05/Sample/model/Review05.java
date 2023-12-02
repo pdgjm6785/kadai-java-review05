@@ -26,7 +26,7 @@ public class Review05 {
                     // kadaidbを指定して接続
                     "jdbc:mysql://localhost/kadaidb?useSSL=false&allowPublicKeyRetrieval=true",
                     "root",
-                    "pdgjm6785");
+                    "password");
 
             // 4. DBとやりとりする窓口（Statementオブジェクト）の作成
             String sql = "SELECT * FROM person WHERE id = ?";    // ★person・id修正
