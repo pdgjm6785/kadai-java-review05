@@ -5,16 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;  // 修正
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Review05 {
 
     public static void main(String[] args) {
         // 3. データベース接続と結果取得のための変数宣言
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null; // 修正
         ResultSet rs = null;
 
         try {
@@ -29,15 +29,15 @@ public class Review05 {
                     "password");
 
             // 4. DBとやりとりする窓口（Statementオブジェクト）の作成
-            stmt = con.createStatement();
+            String sql = "SELECT * FROM country WHERE Name = ?";    // 修正
+            pstmt = con.prepareStatement(sql);  // 修正
 
             // 5, 6. Select文の実行と結果を格納／代入
             System.out.print("検索キーワードを入力してください > ");
             String input = keyIn();
 
-            // ★kadaidbのなかのpersonテーブルからカラム[id]を指定
-            String sql = "select * from person where id = '" + input + "'";
-            rs = stmt.executeQuery(sql);
+            pstmt.setString(1, input);  // ← 修正
+            rs = pstmt.executeQuery();  // ← 修正
 
             // 7. 結果を表示する
             while (rs.next()) {
@@ -66,11 +66,11 @@ public class Review05 {
                     e.printStackTrace();
                 }
             }
-            if (stmt != null) {
+            if (pstmt != null) {
                 try {
-                    stmt.close();
+                    pstmt.close();
                 } catch (SQLException e) {
-                    System.err.println("Statementを閉じるときにエラーが発生しました。");
+                    System.err.println("PreparedStatementを閉じるときにエラーが発生しました。");
                     e.printStackTrace();
                 }
             }
@@ -86,7 +86,7 @@ public class Review05 {
     }
 
     /*
-     * キーボードから入力された値をStringで返す 引数：なし 戻り値：入力された文字列    // ← 追記
+     * キーボードから入力された値をStringで返す 引数：なし 戻り値：String   // ← ★修正
      */
     private static String keyIn() {
         String line = null;
@@ -97,6 +97,18 @@ public class Review05 {
 
         }
         return line;
+    }
+
+    /*
+     * キーボードから入力された値をintで返す 引数：なし 戻り値：int // ★修正
+     */
+    private static int keyInNum() {
+        int result = 0;
+        try {
+            result = Integer.parseInt(keyIn());
+        } catch (NumberFormatException e) {
+        }
+        return result;
     }
 
 }
