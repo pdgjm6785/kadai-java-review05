@@ -100,7 +100,7 @@ public class Review05 {
     }
 
     /*
-     * キーボードから入力された値をintで返す 引数：なし 戻り値：int // ★修正
+     * キーボードから入力された値をintで返す 引数：なし 戻り値：int // ★ 修正
      */
     private static int keyInNum() {
         int result = 0;
@@ -110,5 +110,4 @@ public class Review05 {
         }
         return result;
     }
-
 }
