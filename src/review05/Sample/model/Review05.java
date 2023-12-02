@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;  // 修正
+import java.sql.PreparedStatement;  // ★修正
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +14,7 @@ public class Review05 {
     public static void main(String[] args) {
         // 3. データベース接続と結果取得のための変数宣言
         Connection con = null;
-        PreparedStatement pstmt = null; // 修正
+        PreparedStatement pstmt = null; // ★修正
         ResultSet rs = null;
 
         try {
@@ -23,20 +23,20 @@ public class Review05 {
 
             // 2. DBと接続する
             con = DriverManager.getConnection(
-                    // ★kadaidbを指定して接続
+                    // kadaidbを指定して接続
                     "jdbc:mysql://localhost/kadaidb?useSSL=false&allowPublicKeyRetrieval=true",
                     "root",
-                    "password");
+                    "pdgjm6785");
 
             // 4. DBとやりとりする窓口（Statementオブジェクト）の作成
-            String sql = "SELECT * FROM country WHERE Name = ?";    // 修正
+            String sql = "SELECT * FROM person WHERE id = ?";    // ★person・id修正
             pstmt = con.prepareStatement(sql);  // 修正
 
             // 5, 6. Select文の実行と結果を格納／代入
             System.out.print("検索キーワードを入力してください > ");
-            String input = keyIn();
+            int input = keyInNum();
 
-            pstmt.setString(1, input);  // ← 修正
+            pstmt.setInt(1, input);  // ← ★int修正
             rs = pstmt.executeQuery();  // ← 修正
 
             // 7. 結果を表示する
@@ -86,7 +86,7 @@ public class Review05 {
     }
 
     /*
-     * キーボードから入力された値をStringで返す 引数：なし 戻り値：String   // ← ★修正
+     * キーボードから入力された値をStringで返す 引数：なし 戻り値：String
      */
     private static String keyIn() {
         String line = null;
@@ -100,7 +100,7 @@ public class Review05 {
     }
 
     /*
-     * キーボードから入力された値をintで返す 引数：なし 戻り値：int // ★ 修正
+     * キーボードから入力された値をintで返す 引数：なし 戻り値：int // ★ int型で返す修正
      */
     private static int keyInNum() {
         int result = 0;
